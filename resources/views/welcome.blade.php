@@ -1702,7 +1702,7 @@
         <section class="hero" aria-labelledby="hero-title">
             <div class="hero-inner">
                 <span class="eyebrow reveal">Gdh. Gadhdhoo, Maldives</span>
-                <h1 id="hero-title" class="reveal delay-1">Opal Oasis Inn</h1>
+                <h1 id="hero-title" class="reveal delay-1">Opal Oasis</h1>
                 <p class="reveal delay-2">A peaceful island retreat in Gadhdhoo, Maldives</p>
                 <div class="hero-actions reveal delay-3">
                     <a class="button button-primary" href="#booking">Book Your Stay</a>
