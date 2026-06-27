@@ -267,8 +267,9 @@
 
         h1 {
             max-width: 760px;
-            font-size: clamp(3.2rem, 8vw, 7.3rem);
+            font-size: clamp(3.2rem, 7vw, 7.3rem);
             letter-spacing: 0;
+            white-space: nowrap;
         }
 
         .hero p {
@@ -1701,7 +1702,7 @@
         <section class="hero" aria-labelledby="hero-title">
             <div class="hero-inner">
                 <span class="eyebrow reveal">Gdh. Gadhdhoo, Maldives</span>
-                <h1 id="hero-title" class="reveal delay-1">Opal Oasis Guest House</h1>
+                <h1 id="hero-title" class="reveal delay-1">Opal Oasis Inn</h1>
                 <p class="reveal delay-2">A peaceful island retreat in Gadhdhoo, Maldives</p>
                 <div class="hero-actions reveal delay-3">
                     <a class="button button-primary" href="#booking">Book Your Stay</a>
