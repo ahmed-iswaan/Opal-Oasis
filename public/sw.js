@@ -1,6 +1,5 @@
-const CACHE_NAME = 'opal-oasis-v2';
+const CACHE_NAME = 'opal-oasis-v3';
 const PRECACHE_URLS = [
-    '/',
     '/assets/images/optimized/hero-guest-house.jpg',
     '/assets/images/optimized/logo-nav.png',
     '/assets/images/optimized/logo-gold.png',
@@ -40,6 +39,23 @@ self.addEventListener('fetch', function (event) {
         return;
     }
 
+    // Network-first for navigation requests (HTML pages)
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request).then(function (networkResponse) {
+                var responseClone = networkResponse.clone();
+                caches.open(CACHE_NAME).then(function (cache) {
+                    cache.put(event.request, responseClone);
+                });
+                return networkResponse;
+            }).catch(function () {
+                return caches.match(event.request);
+            })
+        );
+        return;
+    }
+
+    // Cache-first for static assets (images, etc.)
     event.respondWith(
         caches.match(event.request).then(function (cachedResponse) {
             if (cachedResponse) {
