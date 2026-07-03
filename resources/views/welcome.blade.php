@@ -943,6 +943,7 @@
 
         .gallery {
             display: flex;
+            align-items: flex-end;
             gap: 18px;
             overflow-x: auto;
             overflow-y: hidden;
@@ -1036,7 +1037,7 @@
             position: relative;
             flex: 0 0 clamp(280px, 38vw, 520px);
             overflow: hidden;
-            height: clamp(320px, 42vw, 460px);
+            height: clamp(420px, 50vw, 580px);
             border: 1px solid rgba(200, 164, 93, .18);
             border-radius: 18px;
             background: #2c2f35;
@@ -1050,7 +1051,8 @@
         }
 
         .gallery-item.large {
-            grid-row: auto;
+            flex: 0 0 clamp(340px, 44vw, 620px);
+            height: clamp(460px, 56vw, 640px);
         }
 
         .gallery-item.wide {
@@ -1619,7 +1621,12 @@
 
             .gallery-item {
                 flex-basis: min(82vw, 320px);
-                height: 320px;
+                height: 380px;
+            }
+
+            .gallery-item.large {
+                flex-basis: min(82vw, 360px);
+                height: 440px;
             }
 
             .room-body {
@@ -1684,7 +1691,7 @@
             </div>
 
             <div class="nav-actions">
-                <a class="phone-link" href="tel:+9609996759">+960 999 6759</a>
+                <a class="phone-link" href="tel:+9607353521">+960 735 3521</a>
                 <a class="nav-book" href="#booking">
                     <span>Book Now</span>
                     <span class="nav-arrow" aria-hidden="true">
@@ -1991,7 +1998,7 @@
                 </div>
 
                 <div class="gallery" data-gallery>
-                    <figure class="gallery-item reveal" data-gallery-category="guest-house">
+                    <figure class="gallery-item large reveal" data-gallery-category="guest-house">
                         <img src="{{ asset('assets/images/optimized/guest-house-exterior.jpg') }}" alt="Opal Oasis guest house exterior" loading="lazy" decoding="async">
                         <figcaption class="gallery-caption">Guest House <span>Stay</span></figcaption>
                     </figure>
@@ -2173,9 +2180,9 @@
                 <div>
                     <h3>Contact</h3>
                     <div class="footer-contact">
-                        <a href="tel:+9609996759">
+                        <a href="tel:+9607353521">
                             <span>Phone / WhatsApp</span>
-                            <strong>+960 999 6759</strong>
+                            <strong>+960 735 3521</strong>
                         </a>
                         <a href="#booking">
                             <span>Reservations</span>
