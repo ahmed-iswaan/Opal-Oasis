@@ -7,6 +7,10 @@ use App\Livewire\Pages\Dashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    if (app()->isDownForMaintenance()) {
+        return response()->view('maintenance', [], 503);
+    }
+
     return response()
         ->view('welcome')
         ->header('Cache-Control', 'public, max-age=300, stale-while-revalidate=86400');
