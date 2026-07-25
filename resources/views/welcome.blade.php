@@ -7,6 +7,8 @@
     <meta name="keywords" content="Opal Oasis, guest house Gadhdhoo, Maldives guest house, Tiger Stripes surf, Gadhdhoo Kunaa, Maldives rooms">
     <meta name="author" content="Opal Oasis Guest House">
 
+    @include('partials.google-analytics')
+
     <title>Opal Oasis | Gdh. Gadhdhoo, Maldives</title>
 
     <link rel="icon" href="{{ asset('assets/images/optimized/logo-gold.png') }}" type="image/png">
