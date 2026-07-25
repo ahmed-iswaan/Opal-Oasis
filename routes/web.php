@@ -16,22 +16,24 @@ Route::get('/', function () {
         ->header('Cache-Control', 'public, max-age=300, stale-while-revalidate=86400');
 })->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', Dashboard::class)
-        ->middleware('permission:view dashboard')
-        ->name('dashboard');
+if (config('auth.enabled')) {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('dashboard', Dashboard::class)
+            ->middleware('permission:view dashboard')
+            ->name('dashboard');
 
-    Route::get('admin/users', Users::class)
-        ->middleware('permission:users.view')
-        ->name('admin.users');
+        Route::get('admin/users', Users::class)
+            ->middleware('permission:users.view')
+            ->name('admin.users');
 
-    Route::get('admin/roles', Roles::class)
-        ->middleware('permission:roles.view')
-        ->name('admin.roles');
+        Route::get('admin/roles', Roles::class)
+            ->middleware('permission:roles.view')
+            ->name('admin.roles');
 
-    Route::get('admin/permissions', Permissions::class)
-        ->middleware('permission:permissions.view')
-        ->name('admin.permissions');
-});
+        Route::get('admin/permissions', Permissions::class)
+            ->middleware('permission:permissions.view')
+            ->name('admin.permissions');
+    });
 
-require __DIR__.'/settings.php';
+    require __DIR__.'/settings.php';
+}

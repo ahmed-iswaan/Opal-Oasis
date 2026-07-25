@@ -18,7 +18,9 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        if (! config('auth.enabled')) {
+            Fortify::ignoreRoutes();
+        }
     }
 
     /**
@@ -26,6 +28,10 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (! config('auth.enabled')) {
+            return;
+        }
+
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
