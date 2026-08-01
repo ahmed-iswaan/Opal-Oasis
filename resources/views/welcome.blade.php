@@ -1,3 +1,31 @@
+@php
+    $roomGalleryGroups = [
+        'garden' => [
+            'label' => 'Garden Double Room',
+            'folder' => 'Garden Double Room 102 and 203',
+            'files' => array_map(fn ($number) => $number.'.png', range(1001, 1015)),
+        ],
+        'family' => [
+            'label' => 'Deluxe / Family Room',
+            'folder' => 'Double Delux (Family Room. 103, 104, 204)',
+            'files' => array_map(fn ($number) => $number.'.png', range(2001, 2012)),
+        ],
+        'premium' => [
+            'label' => 'Premium Double Room',
+            'folder' => 'Premium Double Room (101, 202, 2025)',
+            'files' => array_map(fn ($number) => $number.'.png', range(3001, 3007)),
+        ],
+        'signature' => [
+            'label' => 'Signature Double Room',
+            'folder' => 'Signature Double Room (201)',
+            'files' => array_map(fn ($number) => $number.'.png', range(4001, 4005)),
+        ],
+    ];
+    $restaurantGalleryFiles = array_map(fn ($number) => 'Restaurent '.$number.'.png', range(1, 5));
+    $excursionGalleryFiles = collect(glob(public_path('assets/Rooms and Outdoors/Excursion areas/web/*.jpg')) ?: [])
+        ->map(fn ($file) => basename($file))
+        ->values();
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -1012,6 +1040,20 @@
             margin: -8px 0 30px;
         }
 
+        .gallery-subfilters {
+            margin-top: -18px;
+        }
+
+        .gallery-subfilters[hidden] {
+            display: none;
+        }
+
+        .gallery-filter.secondary {
+            min-height: 36px;
+            padding: 7px 13px;
+            font-size: .8rem;
+        }
+
         .gallery-filter {
             min-height: 42px;
             border: 1px solid rgba(37, 39, 43, .1);
@@ -1861,7 +1903,7 @@
                 <div class="grid rooms-grid">
                     <article class="room-card reveal">
                         <div class="room-image">
-                            <img src="{{ asset('assets/images/optimized/room-garden-double.jpg') }}" alt="Garden Double Room at Opal Oasis" loading="lazy" decoding="async">
+                            <img src="{{ asset('assets/Rooms and Outdoors/Garden Double Room 102 and 203/1001.png') }}" alt="Garden Double Room at Opal Oasis" loading="lazy" decoding="async">
                         </div>
                         <div class="room-body">
                             <h3>Garden Double Room</h3>
@@ -1871,13 +1913,13 @@
                                 <span class="pill">Double bed</span>
                                 <span class="pill">Calm retreat</span>
                             </div>
-                            <button class="room-link" type="button" data-room-info="garden">More Info</button>
+                            <a class="room-link" href="{{ route('rooms.show', 'garden') }}">View Room Details</a>
                         </div>
                     </article>
 
                     <article class="room-card reveal delay-1">
                         <div class="room-image">
-                            <img src="{{ asset('assets/images/optimized/room-family.jpg') }}" alt="Deluxe Double Room and Family Room at Opal Oasis" loading="lazy" decoding="async">
+                            <img src="{{ asset('assets/Rooms and Outdoors/Double Delux (Family Room. 103, 104, 204)/2001.png') }}" alt="Deluxe Double Room and Family Room at Opal Oasis" loading="lazy" decoding="async">
                         </div>
                         <div class="room-body">
                             <h3>Deluxe Double Room / Family Room</h3>
@@ -1887,13 +1929,13 @@
                                 <span class="pill">Extra space</span>
                                 <span class="pill">Enhanced comfort</span>
                             </div>
-                            <button class="room-link" type="button" data-room-info="family">More Info</button>
+                            <a class="room-link" href="{{ route('rooms.show', 'family') }}">View Room Details</a>
                         </div>
                     </article>
 
                     <article class="room-card reveal delay-2">
                         <div class="room-image">
-                            <img src="{{ asset('assets/images/optimized/room-premium-double.jpg') }}" alt="Premium Double Room at Opal Oasis" loading="lazy" decoding="async">
+                            <img src="{{ asset('assets/Rooms and Outdoors/Premium Double Room (101, 202, 2025)/3001.png') }}" alt="Premium Double Room at Opal Oasis" loading="lazy" decoding="async">
                         </div>
                         <div class="room-body">
                             <h3>Premium Double Room</h3>
@@ -1903,13 +1945,13 @@
                                 <span class="pill">Refined decor</span>
                                 <span class="pill">Upgraded stay</span>
                             </div>
-                            <button class="room-link" type="button" data-room-info="premium">More Info</button>
+                            <a class="room-link" href="{{ route('rooms.show', 'premium') }}">View Room Details</a>
                         </div>
                     </article>
 
                     <article class="room-card reveal delay-3">
                         <div class="room-image">
-                            <img src="{{ asset('assets/images/optimized/room-signature-double.jpg') }}" alt="Signature Double Room at Opal Oasis" loading="lazy" decoding="async">
+                            <img src="{{ asset('assets/Rooms and Outdoors/Signature Double Room (201)/4001.png') }}" alt="Signature Double Room at Opal Oasis" loading="lazy" decoding="async">
                         </div>
                         <div class="room-body">
                             <h3>Signature Double Room</h3>
@@ -1919,7 +1961,7 @@
                                 <span class="pill">Signature stay</span>
                                 <span class="pill">Finest experience</span>
                             </div>
-                            <button class="room-link" type="button" data-room-info="signature">More Info</button>
+                            <a class="room-link" href="{{ route('rooms.show', 'signature') }}">View Room Details</a>
                         </div>
                     </article>
                 </div>
@@ -1972,18 +2014,24 @@
         <section class="section" id="gallery" aria-labelledby="gallery-title">
             <div class="container">
                 <div class="section-heading center reveal">
-                    <span class="eyebrow" style="margin-inline: auto;">Gallery</span>
-                    <h2 id="gallery-title">A glimpse of Opal Oasis and island life.</h2>
-                    <p>Placeholder imagery is ready to be replaced with real rooms, guest house, excursions, and Gadhdhoo moments.</p>
+                    <span class="eyebrow" style="margin-inline: auto;">Rooms & Experiences</span>
+                    <h2 id="gallery-title">Explore every corner of Opal Oasis.</h2>
+                    <p>Browse our complete room collection, restaurant, and island excursion photos.</p>
                 </div>
 
-                <div class="gallery-filters reveal" aria-label="Gallery filters">
-                    <button class="gallery-filter active" type="button" data-gallery-filter="all">All</button>
-                    <button class="gallery-filter" type="button" data-gallery-filter="guest-house">Guest House</button>
-                    <button class="gallery-filter" type="button" data-gallery-filter="rooms">Rooms</button>
-                    <button class="gallery-filter" type="button" data-gallery-filter="ocean">Ocean</button>
-                    <button class="gallery-filter" type="button" data-gallery-filter="surfing">Surfing</button>
-                    <button class="gallery-filter" type="button" data-gallery-filter="island-life">Island Life</button>
+                <div class="gallery-filters reveal" role="tablist" aria-label="Gallery sections">
+                    <button class="gallery-filter active" type="button" role="tab" aria-selected="true" data-gallery-section-button="rooms">Rooms</button>
+                    <button class="gallery-filter" type="button" role="tab" aria-selected="false" data-gallery-section-button="restaurant">Restaurant</button>
+                    <button class="gallery-filter" type="button" role="tab" aria-selected="false" data-gallery-section-button="excursions">Excursions</button>
+                </div>
+
+                <div class="gallery-filters gallery-subfilters reveal" aria-label="Room categories" data-room-filters>
+                    <button class="gallery-filter secondary active" type="button" aria-pressed="true" data-room-filter="all">All Rooms</button>
+                    @foreach ($roomGalleryGroups as $roomKey => $roomGroup)
+                        <button class="gallery-filter secondary" type="button" aria-pressed="false" data-room-filter="{{ $roomKey }}">
+                            {{ $roomGroup['label'] }}
+                        </button>
+                    @endforeach
                 </div>
 
                 <div class="gallery-controls reveal" aria-label="Gallery scroll controls">
@@ -2000,38 +2048,39 @@
                 </div>
 
                 <div class="gallery" data-gallery>
-                    <figure class="gallery-item large reveal" data-gallery-category="guest-house">
-                        <img src="{{ asset('assets/images/optimized/guest-house-exterior.jpg') }}" alt="Opal Oasis guest house exterior" loading="lazy" decoding="async">
-                        <figcaption class="gallery-caption">Guest House <span>Stay</span></figcaption>
-                    </figure>
-                    <figure class="gallery-item reveal delay-1" data-gallery-category="guest-house">
-                        <img src="{{ asset('assets/images/optimized/guest-house-entrance.jpg') }}" alt="Opal Oasis guest house entrance" style="object-position: center 58%;" loading="lazy" decoding="async">
-                        <figcaption class="gallery-caption">Arrival View <span>Guest House</span></figcaption>
-                    </figure>
-                    <figure class="gallery-item reveal delay-2" data-gallery-category="rooms">
-                        <img src="{{ asset('assets/images/optimized/guest-house-detail.jpg') }}" alt="Opal Oasis guest house room detail" style="object-position: center 60%;" loading="lazy" decoding="async">
-                        <figcaption class="gallery-caption">Room Detail <span>Rooms</span></figcaption>
-                    </figure>
-                    <figure class="gallery-item reveal" data-gallery-category="rooms">
-                        <img src="https://images.unsplash.com/photo-1578922746465-3a80a228f223?auto=format&fit=crop&w=1000&q=80" alt="Tropical guest house room placeholder" loading="lazy" decoding="async">
-                        <figcaption class="gallery-caption">Guest Room <span>Rooms</span></figcaption>
-                    </figure>
-                    <figure class="gallery-item reveal delay-1" data-gallery-category="ocean">
-                        <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=900&q=80" alt="Calm tropical lagoon placeholder" loading="lazy" decoding="async">
-                        <figcaption class="gallery-caption">Lagoon Calm <span>Ocean</span></figcaption>
-                    </figure>
-                    <figure class="gallery-item reveal delay-2" data-gallery-category="surfing">
-                        <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=900&q=80" alt="Surfing wave placeholder" loading="lazy" decoding="async">
-                        <figcaption class="gallery-caption">Tiger Stripes <span>Surfing</span></figcaption>
-                    </figure>
-                    <figure class="gallery-item reveal" data-gallery-category="island-life">
-                        <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=80" alt="Island life and tropical path placeholder" loading="lazy" decoding="async">
-                        <figcaption class="gallery-caption">Island Path <span>Island Life</span></figcaption>
-                    </figure>
-                    <figure class="gallery-item reveal delay-1" data-gallery-category="ocean">
-                        <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=900&q=80" alt="Ocean excursion placeholder" loading="lazy" decoding="async">
-                        <figcaption class="gallery-caption">Excursion Day <span>Ocean</span></figcaption>
-                    </figure>
+                    @foreach ($roomGalleryGroups as $roomKey => $roomGroup)
+                        @foreach ($roomGroup['files'] as $photoIndex => $file)
+                            <figure class="gallery-item reveal {{ $loop->parent->first && $loop->first ? 'large' : '' }}"
+                                data-gallery-section="rooms" data-room-category="{{ $roomKey }}">
+                                <img src="{{ asset('assets/Rooms and Outdoors/'.$roomGroup['folder'].'/'.$file) }}"
+                                    alt="{{ $roomGroup['label'] }} photo {{ $photoIndex + 1 }} at Opal Oasis"
+                                    loading="lazy" decoding="async">
+                                <figcaption class="gallery-caption">
+                                    {{ $roomGroup['label'] }} <span>Photo {{ $photoIndex + 1 }} of {{ count($roomGroup['files']) }}</span>
+                                </figcaption>
+                            </figure>
+                        @endforeach
+                    @endforeach
+
+                    @foreach ($restaurantGalleryFiles as $photoIndex => $file)
+                        <figure class="gallery-item reveal hidden" data-gallery-section="restaurant">
+                            <img src="{{ asset('assets/Rooms and Outdoors/Restaurent/'.$file) }}"
+                                alt="Opal Oasis restaurant photo {{ $photoIndex + 1 }}" loading="lazy" decoding="async">
+                            <figcaption class="gallery-caption">
+                                Opal Oasis Restaurant <span>Photo {{ $photoIndex + 1 }} of {{ count($restaurantGalleryFiles) }}</span>
+                            </figcaption>
+                        </figure>
+                    @endforeach
+
+                    @foreach ($excursionGalleryFiles as $photoIndex => $file)
+                        <figure class="gallery-item reveal hidden" data-gallery-section="excursions">
+                            <img src="{{ asset('assets/Rooms and Outdoors/Excursion areas/web/'.$file) }}"
+                                alt="Gadhdhoo excursion aerial view {{ $photoIndex + 1 }}" loading="lazy" decoding="async">
+                            <figcaption class="gallery-caption">
+                                Gadhdhoo Excursion <span>Aerial view {{ $photoIndex + 1 }} of {{ count($excursionGalleryFiles) }}</span>
+                            </figcaption>
+                        </figure>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -2144,7 +2193,7 @@
                 </svg>
             </button>
             <div class="room-modal-image">
-                <img id="roomModalImage" src="{{ asset('assets/images/optimized/room-garden-double.jpg') }}" alt="" loading="lazy" decoding="async">
+                <img id="roomModalImage" src="{{ asset('assets/Rooms and Outdoors/Garden Double Room 102 and 203/1001.png') }}" alt="" loading="lazy" decoding="async">
             </div>
             <div class="room-modal-content">
                 <span class="eyebrow">Room Details</span>
@@ -2195,26 +2244,16 @@
                 <div>
                     <h3>Social media</h3>
                     <div class="social-links" aria-label="Social media links">
-                        <a href="#" aria-label="Instagram">
+                        <a href="https://www.instagram.com/opaloasisgadhdhoo/" target="_blank" rel="noopener noreferrer" aria-label="Opal Oasis on Instagram">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                 <rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect>
                                 <circle cx="12" cy="12" r="4"></circle>
                                 <circle cx="17.3" cy="6.7" r=".8" fill="currentColor" stroke="none"></circle>
                             </svg>
                         </a>
-                        <a href="#" aria-label="Facebook">
+                        <a href="https://www.facebook.com/people/Opaloasisgahdhoo/61591479726570/" target="_blank" rel="noopener noreferrer" aria-label="Opal Oasis on Facebook">
                             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M14.2 8.1V6.7c0-.7.5-.9 1-.9h2V2.4L14.4 2c-3.1 0-4.7 1.9-4.7 4.5v1.6H6.8v3.8h2.9V22h4.1V11.9h3.1l.5-3.8h-3.2Z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="TikTok">
-                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d="M16.7 3c.4 2.5 1.8 4 4.1 4.2v3.6a7.6 7.6 0 0 1-4.1-1.3v5.8c0 4-2.6 6.7-6.4 6.7a6.1 6.1 0 0 1-6.1-6.1c0-3.5 2.7-6.1 6.3-6.1.5 0 .9 0 1.3.1v3.7a3.7 3.7 0 0 0-1.4-.3 2.5 2.5 0 1 0 2.4 2.5V3h3.9Z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="YouTube">
-                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5a3 3 0 0 0-2.1 2.1A31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.4-4.8ZM10 15.4V8.6l5.8 3.4-5.8 3.4Z"></path>
                             </svg>
                         </a>
                     </div>
@@ -2268,28 +2307,28 @@
             garden: {
                 title: 'Garden Double Room',
                 category: 'Garden Double Room',
-                image: "{{ asset('assets/images/optimized/room-garden-double.jpg') }}",
+                image: "{{ asset('assets/Rooms and Outdoors/Garden Double Room 102 and 203/1001.png') }}",
                 description: 'A cozy and peaceful double room designed for relaxed island stays, with a soft garden-side atmosphere and everything needed after a bright day in Gadhdhoo.',
                 features: ['Garden-inspired setting', 'Comfortable double bed', 'Ideal for couples', 'Calm and restful design']
             },
             family: {
                 title: 'Deluxe Double Room / Family Room',
                 category: 'Deluxe Double Room / Family Room',
-                image: "{{ asset('assets/images/optimized/room-family.jpg') }}",
+                image: "{{ asset('assets/Rooms and Outdoors/Double Delux (Family Room. 103, 104, 204)/2001.png') }}",
                 description: 'A spacious room option with enhanced comfort, suited for families or guests who prefer extra room to unwind during their Maldives escape.',
                 features: ['Family-friendly layout', 'More space for longer stays', 'Enhanced amenities', 'Comfortable island retreat']
             },
             premium: {
                 title: 'Premium Double Room',
                 category: 'Premium Double Room',
-                image: "{{ asset('assets/images/optimized/room-premium-double.jpg') }}",
+                image: "{{ asset('assets/Rooms and Outdoors/Premium Double Room (101, 202, 2025)/3001.png') }}",
                 description: 'A stylish double room with upgraded comfort and refined decor, made for guests who want a more elevated guest house experience.',
                 features: ['Premium comfort', 'Refined room styling', 'Upgraded stay experience', 'Great for couples and solo travelers']
             },
             signature: {
                 title: 'Signature Double Room',
                 category: 'Signature Double Room',
-                image: "{{ asset('assets/images/optimized/room-signature-double.jpg') }}",
+                image: "{{ asset('assets/Rooms and Outdoors/Signature Double Room (201)/4001.png') }}",
                 description: 'The finest Opal Oasis room category, designed for the most comfortable and memorable stay with the best overall room experience.',
                 features: ['Signature room category', 'Best overall experience', 'Elegant comfort', 'Ideal for special stays']
             }
@@ -2363,6 +2402,19 @@
             }
         });
 
+        var requestedRoom = new URLSearchParams(window.location.search).get('room');
+        var requestedRoomCategories = {
+            garden: 'Garden Double Room',
+            family: 'Deluxe Double Room / Family Room',
+            premium: 'Premium Double Room',
+            signature: 'Signature Double Room'
+        };
+        var requestedRoomSelect = document.getElementById('room_category');
+
+        if (requestedRoomSelect && requestedRoomCategories[requestedRoom]) {
+            requestedRoomSelect.value = requestedRoomCategories[requestedRoom];
+        }
+
         document.querySelectorAll('[data-review-carousel]').forEach(function (carousel) {
             var track = carousel.querySelector('.reviews-track');
             var slides = Array.prototype.slice.call(carousel.querySelectorAll('.review-card'));
@@ -2429,10 +2481,14 @@
         });
 
         document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
-            var filterButtons = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-filter]'));
-            var galleryItems = Array.prototype.slice.call(gallery.querySelectorAll('[data-gallery-category]'));
+            var sectionButtons = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-section-button]'));
+            var roomFilterButtons = Array.prototype.slice.call(document.querySelectorAll('[data-room-filter]'));
+            var roomFilters = document.querySelector('[data-room-filters]');
+            var galleryItems = Array.prototype.slice.call(gallery.querySelectorAll('[data-gallery-section]'));
             var prevButton = document.querySelector('[data-gallery-prev]');
             var nextButton = document.querySelector('[data-gallery-next]');
+            var activeSection = 'rooms';
+            var activeRoomCategory = 'all';
 
             function getVisibleItems() {
                 return galleryItems.filter(function (item) {
@@ -2447,8 +2503,6 @@
                     galleryItem.classList.toggle('is-featured', galleryItem === item);
                 });
             }
-
-            setFeatured(getVisibleItems()[0]);
 
             galleryItems.forEach(function (item) {
                 item.addEventListener('click', function () {
@@ -2489,35 +2543,57 @@
                 });
             }
 
-            filterButtons.forEach(function (button) {
-                button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
+            function applyGalleryFilter() {
+                var firstVisibleItem = null;
 
+                galleryItems.forEach(function (item) {
+                    var isSelectedSection = item.dataset.gallerySection === activeSection;
+                    var isSelectedRoom = activeSection !== 'rooms' || activeRoomCategory === 'all' || item.dataset.roomCategory === activeRoomCategory;
+                    var shouldShow = isSelectedSection && isSelectedRoom;
+                    item.classList.toggle('hidden', !shouldShow);
+
+                    if (shouldShow && !firstVisibleItem) {
+                        firstVisibleItem = item;
+                    }
+                });
+
+                if (roomFilters) {
+                    roomFilters.hidden = activeSection !== 'rooms';
+                }
+
+                gallery.scrollTo({ left: 0, behavior: 'smooth' });
+                setFeatured(firstVisibleItem);
+            }
+
+            sectionButtons.forEach(function (button) {
                 button.addEventListener('click', function () {
-                    var selectedCategory = button.dataset.galleryFilter;
-                    var firstVisibleItem = null;
+                    activeSection = button.dataset.gallerySectionButton;
 
-                    filterButtons.forEach(function (filterButton) {
-                        var isActive = filterButton === button;
-                        filterButton.classList.toggle('active', isActive);
-                        filterButton.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                    sectionButtons.forEach(function (sectionButton) {
+                        var isActive = sectionButton === button;
+                        sectionButton.classList.toggle('active', isActive);
+                        sectionButton.setAttribute('aria-selected', isActive ? 'true' : 'false');
                     });
 
-                    galleryItems.forEach(function (item) {
-                        var shouldShow = selectedCategory === 'all' || item.dataset.galleryCategory === selectedCategory;
-                        item.classList.toggle('hidden', !shouldShow);
-
-                        if (shouldShow && !firstVisibleItem) {
-                            firstVisibleItem = item;
-                        }
-                    });
-
-                    gallery.scrollTo({
-                        left: 0,
-                        behavior: 'smooth'
-                    });
-                    setFeatured(firstVisibleItem);
+                    applyGalleryFilter();
                 });
             });
+
+            roomFilterButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    activeRoomCategory = button.dataset.roomFilter;
+
+                    roomFilterButtons.forEach(function (roomButton) {
+                        var isActive = roomButton === button;
+                        roomButton.classList.toggle('active', isActive);
+                        roomButton.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                    });
+
+                    applyGalleryFilter();
+                });
+            });
+
+            applyGalleryFilter();
         });
 
         var iconTemplate = document.getElementById('icon-sprite');

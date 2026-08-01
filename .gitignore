@@ -15,6 +15,10 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+*.DNG
+*.dng
+/public/assets/Rooms and Outdoors/Outdoor/*-HDR.jpg
+/public/assets/Rooms and Outdoors/Reception and Lobby/R*.jpg
 /auth.json
 /.fleet
 /.idea

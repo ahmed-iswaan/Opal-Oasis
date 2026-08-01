@@ -1,0 +1,60 @@
+<?php
+
+$commonAmenities = [
+    'Air conditioning',
+    'Private bathroom',
+    'Complimentary Wi-Fi',
+    'Hot and cold water',
+    'Fresh bed linen and towels',
+    'Toiletries',
+    'Wardrobe and clothing storage',
+    'Daily housekeeping',
+    'Non-smoking room',
+];
+
+return [
+    'garden' => [
+        'slug' => 'garden',
+        'name' => 'Garden Double Room',
+        'room_numbers' => ['102', '203'],
+        'folder' => 'Garden Double Room 102 and 203',
+        'images' => array_map(fn (int $number) => $number.'.png', range(1001, 1015)),
+        'summary' => 'A calm and comfortable double room with a relaxed garden-side atmosphere.',
+        'description' => 'Designed for an easy island stay, the Garden Double Room offers a peaceful place to rest after days spent exploring Gadhdhoo, the reef, and nearby beaches. Its welcoming layout is well suited to couples and solo travellers.',
+        'highlights' => ['Double-room layout', 'Garden-inspired setting', 'Ideal for couples or solo travellers'],
+        'amenities' => $commonAmenities,
+    ],
+    'family' => [
+        'slug' => 'family',
+        'name' => 'Deluxe Double Room / Family Room',
+        'room_numbers' => ['103', '104', '204'],
+        'folder' => 'Double Delux (Family Room. 103, 104, 204)',
+        'images' => array_map(fn (int $number) => $number.'.png', range(2001, 2012)),
+        'summary' => 'A spacious and flexible room category for families and guests who prefer extra room.',
+        'description' => 'The Deluxe Double / Family Room combines extra space with practical comfort for longer stays. Its flexible arrangement makes it a welcoming choice for couples, small families, and guests travelling together.',
+        'highlights' => ['Family-friendly category', 'More room to unwind', 'Suitable for longer stays'],
+        'amenities' => array_merge($commonAmenities, ['Family-friendly room arrangement']),
+    ],
+    'premium' => [
+        'slug' => 'premium',
+        'name' => 'Premium Double Room',
+        'room_numbers' => ['101', '202', '205'],
+        'folder' => 'Premium Double Room (101, 202, 2025)',
+        'images' => array_map(fn (int $number) => $number.'.png', range(3001, 3007)),
+        'summary' => 'An upgraded double room with refined styling and added comfort.',
+        'description' => 'The Premium Double Room is made for guests looking for a more elevated stay. Refined finishes and a comfortable double-room layout create an inviting retreat between island adventures.',
+        'highlights' => ['Premium room category', 'Refined interior styling', 'Ideal for couples'],
+        'amenities' => $commonAmenities,
+    ],
+    'signature' => [
+        'slug' => 'signature',
+        'name' => 'Signature Double Room',
+        'room_numbers' => ['201'],
+        'folder' => 'Signature Double Room (201)',
+        'images' => array_map(fn (int $number) => $number.'.png', range(4001, 4005)),
+        'summary' => 'Our signature room category for a refined and memorable Opal Oasis stay.',
+        'description' => 'The Signature Double Room represents the finest Opal Oasis room experience. Its elegant atmosphere and considered comfort make it an excellent choice for special stays and guests seeking our best room category.',
+        'highlights' => ['Signature room category', 'Our finest room experience', 'Ideal for special stays'],
+        'amenities' => $commonAmenities,
+    ],
+];
